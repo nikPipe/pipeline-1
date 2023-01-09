@@ -45,6 +45,13 @@ class Node():
             self.outputs.append(socket)
             a += 1
 
+    def __str__(self):
+        '''
+
+        :return:
+        '''
+        return '<Node %s...%s>' % (hex(id(self))[2:5], hex(id(self))[-3:])
+
     def getSocketPosition(self, index, position):
         '''
 
@@ -82,5 +89,21 @@ class Node():
         for socket in self.inputs + self.outputs:
             if socket.hasEdge():
                 socket.edge.update_position()
+
+    def remove(self):
+        '''
+
+        :return:
+        '''
+
+        #REMOVE EDGE FROM SOCKET
+        for socket in (self.inputs + self.outputs):
+            if socket.hasEdge():
+                socket.edge.remove()
+        #REMOVE NODE
+        self.scene.grScene.removeItem(self.grNode)
+        self.grNode = None
+        #REMOVE ITEM
+        self.scene.removeNode(self)
 
 

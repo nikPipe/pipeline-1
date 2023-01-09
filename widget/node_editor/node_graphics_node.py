@@ -43,7 +43,10 @@ class QDMGraphicsNode(QGraphicsItem):
         :return:
         '''
         super().mouseMoveEvent(event)
-        self.node.updateConnectedEdge()
+        #self.node.updateConnectedEdge()
+        for node in self.scene().scene.nodes:
+            if node.grNode.isSelected():
+                node.updateConnectedEdge()
 
 
 
@@ -96,6 +99,7 @@ class QDMGraphicsNode(QGraphicsItem):
         :return:
         '''
         self.titleItem = QGraphicsTextItem(self)
+        self.titleItem.node = self.node
         self.titleItem.setDefaultTextColor(self._title_color)
         self.titleItem.setFont(self._title_font)
         self.titleItem.setPos(self.title_x_pos, self.title_y_pos)

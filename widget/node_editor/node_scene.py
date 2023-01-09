@@ -54,3 +54,4 @@ class Scene():
         :return:
         '''
         self.edges.remove(edge)
+

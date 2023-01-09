@@ -2,8 +2,9 @@ from import_module import *
 
 
 class QDMGraphicsSocket(QGraphicsItem):
-    def __init__(self, parent=None, socket_type=1):
-        super(QDMGraphicsSocket, self).__init__(parent=parent)
+    def __init__(self, socket, socket_type=1):
+        self.socket = socket
+        super(QDMGraphicsSocket, self).__init__(parent=socket.node.grNode)
 
         self.radius = 6.0
         self.outline_width = 1.0

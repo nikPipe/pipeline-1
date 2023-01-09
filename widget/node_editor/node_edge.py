@@ -29,7 +29,14 @@ class Edge():
 
         self.update_position()
         self.scene.grScene.addItem(self.grEdge)
+        self.scene.addEdge(self)
 
+    def __str__(self):
+        '''
+
+        :return:
+        '''
+        return '<Edge %s...%s>' % (hex(id(self))[2:5], hex(id(self))[-3:])
 
     def update_position(self):
         '''
@@ -45,6 +52,8 @@ class Edge():
             end_pos[0] += self.end_socket.node.grNode.pos().x()
             end_pos[1] += self.end_socket.node.grNode.pos().y()
             self.grEdge.setDesination(*end_pos)
+        else:
+            self.grEdge.setDesination(*source_pos)
 
         self.grEdge.update()
 
@@ -69,7 +78,11 @@ class Edge():
         self.remove_from_socket()
         self.scene.grScene.removeItem(self.grEdge)
         self.grEdge = None
-        self.scene.removeEdge(self)
+        try:
+            self.scene.removeEdge(self)
+        except ValueError:
+            pass
+
 
 
 
