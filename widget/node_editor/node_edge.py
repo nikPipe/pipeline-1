@@ -1,6 +1,7 @@
 from import_module import *
 from widget.node_editor import node_graphic_edge
-
+from widget.node_editor.node_serializable import Serializable
+from collections import OrderedDict
 
 try:
     from importlib import reload
@@ -14,21 +15,19 @@ for each in [node_graphic_edge]:
 EDGE_TYPE_DIRECT = 1
 EDGE_TYPE_BEZIER = 2
 
-class Edge():
-    def __init__(self, scene, start_socket, end_socket, edge_type=EDGE_TYPE_DIRECT):
+class Edge(Serializable):
+    def __init__(self, scene, start_socket=None, end_socket=None, edge_type=EDGE_TYPE_DIRECT):
+        super().__init__()
         self.scene = scene
         self.start_socket = start_socket
         self.end_socket = end_socket
-
-        self.start_socket.edge = self
-        if self.end_socket is not None:
-            self.end_socket.edge = self
+        self.edge_type = edge_type
 
 
-        self.grEdge = node_graphic_edge.QDMGraphicsEdgeDirect(self) if edge_type == EDGE_TYPE_DIRECT else node_graphic_edge.QDMGraphicsEdgeBezier(self)
 
-        self.update_position()
-        self.scene.grScene.addItem(self.grEdge)
+        #self.grEdge = node_graphic_edge.QDMGraphicsEdgeDirect(self) if edge_type == EDGE_TYPE_DIRECT else node_graphic_edge.QDMGraphicsEdgeBezier(self)
+
+        #self.scene.grScene.addItem(self.grEdge)
         self.scene.addEdge(self)
 
     def __str__(self):
@@ -37,6 +36,50 @@ class Edge():
         :return:
         '''
         return '<Edge %s...%s>' % (hex(id(self))[2:5], hex(id(self))[-3:])
+    
+    @property
+    def start_socket(self): return self._start_socket
+    @start_socket.setter
+    def start_socket(self, value):
+        self._start_socket = value
+        if self._start_socket is not None:
+            self.start_socket.edge = self
+
+    @property
+    def end_socket(self):
+        return self._end_socket
+
+    @end_socket.setter
+    def end_socket(self, value):
+        self._end_socket = value
+        if self._end_socket is not None:
+            self.end_socket.edge = self
+
+    @property
+    def edge_type(self):
+        return self._edge_type
+
+    @edge_type.setter
+    def edge_type(self, value):
+        if hasattr(self, 'grEdge') and self.grEdge is not None:
+            self.scene.grScene.removeItem(self.grEdge)
+
+        self._edge_type = value
+        if self._edge_type == EDGE_TYPE_DIRECT:
+            self.grEdge = node_graphic_edge.QDMGraphicsEdgeDirect(self)
+
+        elif self._edge_type == node_graphic_edge.QDMGraphicsEdgeBezier:
+            self.grEdge = node_graphic_edge.QDMGraphicsEdgeBezier(self)
+
+        else:
+            self.grEdge = node_graphic_edge.QDMGraphicsEdgeBezier(self)
+
+        self.scene.grScene.addItem(self.grEdge)
+        if self.start_socket is not None:
+            self.update_position()
+
+
+
 
     def update_position(self):
         '''
@@ -83,6 +126,28 @@ class Edge():
         except ValueError:
             pass
 
+    def serialize(self):
+        '''
 
+        :return:
+        '''
+        return OrderedDict([
+            ('id', self.id),
+            ('edge_type', self.edge_type),
+            ('start', self.start_socket.id),
+            ('end', self.end_socket.id),
+        ])
+
+    def deseralize(self, data, hashmap={}):
+        '''
+
+        :return:
+        '''
+        self.id = data['id']
+        self.start_socket = hashmap[data['start']]
+        self.end_socket = hashmap[data['end']]
+        self.edge_type = data['edge_type']
+
+        return True
 
 

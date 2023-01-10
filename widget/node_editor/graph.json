@@ -1,0 +1,138 @@
+{
+    "id": 2537070449312,
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": 2537070449360,
+            "title": "OneNode",
+            "pos_x": 142.0,
+            "pos_y": -264.0,
+            "inputs": [
+                {
+                    "id": 2537070542032,
+                    "index": 0,
+                    "position": 2,
+                    "type": 0
+                },
+                {
+                    "id": 2537070542080,
+                    "index": 1,
+                    "position": 2,
+                    "type": 1
+                },
+                {
+                    "id": 2537070561360,
+                    "index": 2,
+                    "position": 2,
+                    "type": 2
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2537070561408,
+                    "index": 0,
+                    "position": 3,
+                    "type": 0
+                }
+            ],
+            "content": {
+                "id": 2537070040480
+            }
+        },
+        {
+            "id": 2537070459152,
+            "title": "TwoNode",
+            "pos_x": -372.0,
+            "pos_y": -17.0,
+            "inputs": [
+                {
+                    "id": 2537070561888,
+                    "index": 0,
+                    "position": 2,
+                    "type": 0
+                },
+                {
+                    "id": 2537070561936,
+                    "index": 1,
+                    "position": 2,
+                    "type": 1
+                },
+                {
+                    "id": 2537070561984,
+                    "index": 2,
+                    "position": 2,
+                    "type": 2
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2537070562032,
+                    "index": 0,
+                    "position": 3,
+                    "type": 0
+                }
+            ],
+            "content": {
+                "id": 2537070043504
+            }
+        },
+        {
+            "id": 2537070459200,
+            "title": "ThreeNode",
+            "pos_x": 190.0,
+            "pos_y": 134.0,
+            "inputs": [
+                {
+                    "id": 2537070562512,
+                    "index": 0,
+                    "position": 2,
+                    "type": 0
+                },
+                {
+                    "id": 2537070562560,
+                    "index": 1,
+                    "position": 2,
+                    "type": 1
+                },
+                {
+                    "id": 2537070562608,
+                    "index": 2,
+                    "position": 2,
+                    "type": 2
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2537070562656,
+                    "index": 0,
+                    "position": 3,
+                    "type": 0
+                }
+            ],
+            "content": {
+                "id": 2537070037168
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": 2537070561840,
+            "edge_type": 1,
+            "start": 2537070561408,
+            "end": 2537070561888
+        },
+        {
+            "id": 2537070562464,
+            "edge_type": 2,
+            "start": 2537070562032,
+            "end": 2537070562608
+        },
+        {
+            "id": 2537070615360,
+            "edge_type": 2,
+            "start": 2537070562656,
+            "end": 2537070542080
+        }
+    ]
+}

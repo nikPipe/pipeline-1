@@ -16,9 +16,9 @@ for each in [node_scene, node_graphic_view]:
     reload(each)
 
 
-class NodeEditorWnd(QWidget):
+class NodeEditorWidget(QWidget):
     def __init__(self):
-        super(NodeEditorWnd, self).__init__()
+        super(NodeEditorWidget, self).__init__()
         self.sample_widget = sample_widget_template.SAMPLE_WIDGET_TEMPLATE()
 
 
@@ -29,8 +29,7 @@ class NodeEditorWnd(QWidget):
 
         :return:
         '''
-        self.setWindowTitle('NodeEditor')
-        self.setGeometry(200, 200, 1000, 600)
+
 
         self.layout = self.sample_widget.vertical_layout(parent_self=self, set_contents_margins=[0, 0, 0, 0])
 

@@ -1,15 +1,16 @@
 from import_module import *
 from widget.node_editor import node_graphic_socket
-
+from widget.node_editor.node_serializable import Serializable
+from collections import OrderedDict
 LEFT_TOP = 1
 LEFT_BOTTOM = 2
 RIGHT_TOP = 3
 RIGHT_BOTTOM = 4
 
 
-class Socket():
+class Socket(Serializable):
     def __init__(self, node, index=0, position=LEFT_TOP, socket_type=1):
-
+        super().__init__()
         self.node = node
         self.index = index
         self.position = position
@@ -51,3 +52,24 @@ class Socket():
         :return:
         '''
         return '<Socket %s...%s>' % (hex(id(self))[2:5], hex(id(self))[-3:])
+
+    def serialize(self):
+        '''
+
+        :return:
+        '''
+        return OrderedDict([
+            ('id', self.id),
+            ('index', self.index),
+            ('position', self.position),
+            ('type', self.socket_type),
+
+        ])
+    def deseralize(self, data, hashmap={}):
+        '''
+
+        :return:
+        '''
+        self.id = data['id']
+        hashmap[data['id']] = self
+        return True

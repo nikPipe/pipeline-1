@@ -1,6 +1,12 @@
 from import_module import *
 from widget.sample import sample_widget_template
 from widget.node_editor import node_graphic_scene
+from widget.node_editor.node_serializable import Serializable
+from collections import OrderedDict
+from widget.node_editor.node_node import Node
+from widget.node_editor.node_edge import Edge
+from widget.node_editor.node_scene_history import SceneHistory
+import json
 
 
 try:
@@ -11,14 +17,16 @@ except:
 for each in [node_graphic_scene]:
     reload(each)
 
-class Scene():
+class Scene(Serializable):
     def __init__(self):
+        super().__init__()
         self.nodes = []
         self.edges = []
         self.scene_width = 64000
         self.scene_height = 64000
 
         self.initUI()
+        self.history = SceneHistory(self)
 
     def initUI(self):
         '''
@@ -54,4 +62,71 @@ class Scene():
         :return:
         '''
         self.edges.remove(edge)
+
+    def clear(self):
+        '''
+
+        :return:
+        '''
+        while len(self.nodes) > 0:
+            self.nodes[0].remove()
+
+    def saveToFile(self, fileName):
+        '''
+
+        :param fileName:
+        :return:
+        '''
+        with open(fileName, 'w') as file:
+            file.write(json.dumps(self.serialize(), indent=4))
+
+        print('saving to ' + fileName + ' sucessfully')
+
+    def loadFromFile(self, fileName):
+        '''
+
+        :param fileName:
+        :return:
+        '''
+        with open(fileName, 'r') as file:
+            rawData = file.read()
+            data = json.loads(rawData)
+            self.deseralize(data)
+
+    def serialize(self):
+        '''
+
+        :return:
+        '''
+        nodes, edges = [], []
+        for node in self.nodes: nodes.append(node.serialize())
+        for edge in self.edges: edges.append(edge.serialize())
+
+        return OrderedDict([
+            ('id', self.id),
+            ('scene_width', self.scene_width),
+            ('scene_height', self.scene_height),
+            ('nodes', nodes),
+            ('edges', edges),
+        ])
+    def deseralize(self, data, hashmap=[]):
+        '''
+
+        :return:
+        '''
+        print('Deseralizating data: ', data)
+        self.clear()
+
+        hashmap={}
+
+        #CREATE NODES
+        for node_data in data['nodes']:
+            Node(self).deseralize(node_data, hashmap)
+
+        #CREATE EDGES
+        for edge_data in data['edges']:
+            new_edge = Edge(self).deseralize(edge_data, hashmap)
+
+        return True
+
 

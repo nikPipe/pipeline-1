@@ -24,6 +24,8 @@ class QDMGraphicsScene(QGraphicsScene):
         self.setBackgroundBrush(self._color_background)
 
 
+
+
     def setGrScene(self, width, height):
         '''
 
