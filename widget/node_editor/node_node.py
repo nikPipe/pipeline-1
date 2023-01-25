@@ -142,12 +142,12 @@ class Node(Serializable):
 
         ])
 
-    def deseralize(self, data, hashmap={}):
+    def deseralize(self, data, hashmap={}, restore_id=True):
         '''
 
         :return:
         '''
-        self.id = data['id']
+        if restore_id: self.id = data['id']
         hashmap[data['id']] = self
         self.title = data['title']
         self.setPosition(data['pos_x'], data['pos_y'])
@@ -159,14 +159,14 @@ class Node(Serializable):
         for socket_data in data['inputs']:
             new_socket = Socket(self, index=socket_data['index'], position=socket_data['position'],
                                 socket_type=socket_data['type'])
-            new_socket.deseralize(data=socket_data, hashmap=hashmap)
+            new_socket.deseralize(data=socket_data, hashmap=hashmap, restore_id=restore_id)
             self.inputs.append(new_socket)
 
         self.outputs = []
         for socket_data in data['outputs']:
             new_socket = Socket(self, index=socket_data['index'], position=socket_data['position'],
                                 socket_type=socket_data['type'])
-            new_socket.deseralize(data=socket_data, hashmap=hashmap)
+            new_socket.deseralize(data=socket_data, hashmap=hashmap, restore_id=restore_id)
             self.outputs.append(new_socket)
 
 

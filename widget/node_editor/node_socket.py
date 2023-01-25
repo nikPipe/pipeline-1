@@ -65,11 +65,11 @@ class Socket(Serializable):
             ('type', self.socket_type),
 
         ])
-    def deseralize(self, data, hashmap={}):
+    def deseralize(self, data, hashmap={}, restore_id=True):
         '''
 
         :return:
         '''
-        self.id = data['id']
+        if restore_id: self.id = data['id']
         hashmap[data['id']] = self
         return True

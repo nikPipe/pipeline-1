@@ -1,4 +1,4 @@
-import os.path
+import os.path, json
 
 from import_module import *
 from widget.node_editor import node_editor_widget
@@ -44,8 +44,10 @@ class NodeEditorWindow(QMainWindow):
         editMenu.addAction(self.createAct(name='Redo', shortcut='Ctrl+Shift+Z', toolTip='Redo', callback=self.on_file_redo))
         editMenu.addSeparator()
         editMenu.addAction(self.createAct(name='Delete', shortcut='Del', toolTip='Delete', callback=self.on_file_delete))
-
-
+        editMenu.addSeparator()
+        editMenu.addAction(self.createAct(name='Cut', shortcut='Ctrl+X', toolTip='Cut', callback=self.on_file_cut))
+        editMenu.addAction(self.createAct(name='Copy', shortcut='Ctrl+C', toolTip='Copy', callback=self.on_file_copy))
+        editMenu.addAction(self.createAct(name='Paste', shortcut='Ctrl+V', toolTip='Paste', callback=self.on_file_paste))
 
         nodeeditor_widget = node_editor_widget.NodeEditorWidget()
         self.setCentralWidget(nodeeditor_widget)
@@ -129,4 +131,40 @@ class NodeEditorWindow(QMainWindow):
         :return:
         '''
         self.centralWidget().scene.grScene.views()[0].deleteSelected()
+
+    def on_file_cut(self):
+        '''
+
+        :return:
+        '''
+        data = self.centralWidget().scene.clipboard.serializeSelected(delete=True)
+        str_data = json.dumps(data, indent=4)
+        QApplication.instance().clipboard().setText(str_data)
+
+    def on_file_copy(self):
+        '''
+
+        :return:
+        '''
+        data = self.centralWidget().scene.clipboard.serializeSelected(delete=False)
+        str_data = json.dumps(data, indent=4)
+        QApplication.instance().clipboard().setText(str_data)
+
+    def on_file_paste(self):
+        '''
+
+        :return:
+        '''
+        raw_data = QApplication.instance().clipboard().text()
+        try:
+            data = json.loads(raw_data)
+        except ValueError as e:
+            print('Not valid to json data: ', e)
+            return
+
+        if 'nodes' not in data:
+            print('json does not contain any nodes')
+            return
+
+        self.centralWidget().scene.clipboard.serializefromClipboard(data)
 

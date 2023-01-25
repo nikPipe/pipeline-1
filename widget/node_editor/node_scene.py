@@ -6,6 +6,7 @@ from collections import OrderedDict
 from widget.node_editor.node_node import Node
 from widget.node_editor.node_edge import Edge
 from widget.node_editor.node_scene_history import SceneHistory
+from widget.node_editor.node_scene_clipboard import SceneClipboard
 import json
 
 
@@ -27,6 +28,7 @@ class Scene(Serializable):
 
         self.initUI()
         self.history = SceneHistory(self)
+        self.clipboard = SceneClipboard(self)
 
     def initUI(self):
         '''
@@ -109,23 +111,24 @@ class Scene(Serializable):
             ('nodes', nodes),
             ('edges', edges),
         ])
-    def deseralize(self, data, hashmap=[]):
+    def deseralize(self, data, hashmap=[], restore_id=True):
         '''
 
         :return:
         '''
         print('Deseralizating data: ', data)
         self.clear()
+        if restore_id:self.id = data['id']
 
         hashmap={}
 
         #CREATE NODES
         for node_data in data['nodes']:
-            Node(self).deseralize(node_data, hashmap)
+            Node(self).deseralize(node_data, hashmap, restore_id)
 
         #CREATE EDGES
         for edge_data in data['edges']:
-            new_edge = Edge(self).deseralize(edge_data, hashmap)
+            new_edge = Edge(self).deseralize(edge_data, hashmap, restore_id)
 
         return True
 

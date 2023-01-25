@@ -1,0 +1,132 @@
+{
+    "id": 1562323347840,
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": 1562323374176,
+            "title": "OneNode",
+            "pos_x": -350.0,
+            "pos_y": -250.0,
+            "inputs": [
+                {
+                    "id": 1562323457104,
+                    "index": 0,
+                    "position": 2,
+                    "type": 0
+                },
+                {
+                    "id": 1562323457152,
+                    "index": 1,
+                    "position": 2,
+                    "type": 1
+                },
+                {
+                    "id": 1562323459984,
+                    "index": 2,
+                    "position": 2,
+                    "type": 2
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1562323460032,
+                    "index": 0,
+                    "position": 3,
+                    "type": 0
+                }
+            ],
+            "content": {
+                "id": 1562322727216
+            }
+        },
+        {
+            "id": 1562323374224,
+            "title": "TwoNode",
+            "pos_x": -75.0,
+            "pos_y": 0.0,
+            "inputs": [
+                {
+                    "id": 1562323460512,
+                    "index": 0,
+                    "position": 2,
+                    "type": 0
+                },
+                {
+                    "id": 1562323460560,
+                    "index": 1,
+                    "position": 2,
+                    "type": 1
+                },
+                {
+                    "id": 1562323460608,
+                    "index": 2,
+                    "position": 2,
+                    "type": 2
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1562323460656,
+                    "index": 0,
+                    "position": 3,
+                    "type": 0
+                }
+            ],
+            "content": {
+                "id": 1562322769312
+            }
+        },
+        {
+            "id": 1562323374272,
+            "title": "ThreeNode",
+            "pos_x": 200.0,
+            "pos_y": -150.0,
+            "inputs": [
+                {
+                    "id": 1562323461136,
+                    "index": 0,
+                    "position": 2,
+                    "type": 0
+                },
+                {
+                    "id": 1562323461184,
+                    "index": 1,
+                    "position": 2,
+                    "type": 1
+                },
+                {
+                    "id": 1562323461232,
+                    "index": 2,
+                    "position": 2,
+                    "type": 2
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1562323461280,
+                    "index": 0,
+                    "position": 3,
+                    "type": 0
+                }
+            ],
+            "content": {
+                "id": 1562322765856
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": 1562323460464,
+            "edge_type": 1,
+            "start": 1562323460032,
+            "end": 1562323460512
+        },
+        {
+            "id": 1562323461088,
+            "edge_type": 2,
+            "start": 1562323460656,
+            "end": 1562323461232
+        }
+    ]
+}
