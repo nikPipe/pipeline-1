@@ -7,7 +7,7 @@ import requests
 from requests.exceptions import ConnectionError
 from bs4 import BeautifulSoup
 
-
+print('ssss')
 def web_content_div(web_content, class_path):
     '''
 
